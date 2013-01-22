@@ -24,8 +24,8 @@ public class RunStylePhantomJS extends RunStyle {
 	private Process process;
 
 	/**
-	 * Registered as a shutdown hook to make sure that any browsers that were
-	 * not finished are killed.
+	 * Registered as a shutdown hook to make sure that the phantomjs process is killed
+	 * after tests are run.
 	 */
 	private class ShutdownCb extends Thread {
 
@@ -34,7 +34,7 @@ public class RunStylePhantomJS extends RunStyle {
 			try {
 				process.exitValue();
 			} catch (IllegalThreadStateException e) {
-				// The process is still active. Kill it.
+				// phantomjs runs, as expected. Kill it.
 				process.destroy();
 			}
 		}
@@ -42,14 +42,14 @@ public class RunStylePhantomJS extends RunStyle {
 
 	@Override
 	public String[] getInterruptedHosts() {
-		// Make sure all browsers are still running
+		// Make sure phantomjs is still running
 		try {
 			process.exitValue();
 
-			// The host exited, so return its path.
+			// phantomjs exited, so return an arbitrary one-element list
 			return new String[] { "phantomjs" };
 		} catch (IllegalThreadStateException e) {
-			// The process is still active, keep looking.
+			// phantomjs is still active, keep looking.
 		}
 		return null;
 	}

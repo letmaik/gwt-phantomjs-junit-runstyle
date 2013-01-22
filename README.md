@@ -75,4 +75,4 @@ Known issues
   be used for testing, as it is 
   [hardcoded](https://github.com/gwt-maven-plugin/gwt-maven-plugin/blob/master/src/main/java/org/codehaus/mojo/gwt/shell/TestMojo.java#L298)
   for the built-in JUnit run styles supported in GWT.
-- Only production mode tests are supported, as PhantomJS doesn't support plugins. 
+- Only production mode testing is supported, as PhantomJS doesn't support plugins. 

@@ -33,7 +33,7 @@ How can I use it?
 =================
 
 1. Install [PhantomJS](http://phantomjs.org/download.html) on your machine and put its folder into PATH.
-2. Add Maven dependency to your .pom:
+2. Add Maven dependency to your pom.xml:
 
 		<dependency>
 			<groupId>com.github.neothemachine</groupId>
@@ -42,7 +42,7 @@ How can I use it?
 			<scope>test</scope>
 		</dependency>
 
-3. Add surefire config to your .pom:
+3. Add surefire config to your pom.xml:
 
 		<build>
 		 <plugins>

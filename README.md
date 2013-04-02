@@ -42,38 +42,61 @@ How can I use it?
 			<scope>test</scope>
 		</dependency>
 
-3. Add surefire config to your pom.xml:
+3. Adjust the runstyle used by gwt-maven-plugin:
 
 		<build>
-		 <plugins>
-		  ...
-		  <plugin>
-		    <artifactId>maven-surefire-plugin</artifactId>
-		    <version>2.13</version>
-		    <configuration>
-		      <additionalClasspathElements>
-		        <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-		        <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
-		      </additionalClasspathElements>
-		      <useManifestOnlyJar>false</useManifestOnlyJar>
-		      <forkMode>always</forkMode>
-		      <systemProperties>
-		        <property>
-		          <name>gwt.args</name>
-		          <value>-prod -runStyle com.github.neothemachine.gwt.junit.RunStylePhantomJS -out ${project.build.directory}/${project.build.finalName}</value>
-		        </property>
-		      </systemProperties>
-		    </configuration>
-		  </plugin>
-		 </plugins>
-		</plugins>
+			<plugins>
+				...
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>gwt-maven-plugin</artifactId>
+					<version>2.5.1</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>test</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<productionMode>true</productionMode>
+						<mode>com.github.neothemachine.gwt.junit.RunStylePhantomJS</mode>
+					</configuration>
+				</plugin>
+			</plugins>
+		</build>
+
+gwt-maven-plugin < 2.5.1
+------------------------
+
+If you use gwt-maven-plugin < 2.5.1 then the runstyle cannot be defined as above. Instead, use the following work-around:
+
+		<build>
+			<plugins>
+				...
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.13</version>
+					<configuration>
+						<additionalClasspathElements>
+							<additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+							<additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
+						</additionalClasspathElements>
+						<useManifestOnlyJar>false</useManifestOnlyJar>
+						<forkMode>always</forkMode>
+						<systemProperties>
+							<property>
+							<name>gwt.args</name>
+							<value>-prod -runStyle com.github.neothemachine.gwt.junit.RunStylePhantomJS -out ${project.build.directory}/${project.build.finalName}</value>
+							</property>
+						</systemProperties>
+					</configuration>
+				</plugin>
+			</plugins>
+		</build>
 
 
 Known issues
 ============
 
-- [At the moment](http://jira.codehaus.org/browse/MGWT-351), the gwt-maven-plugin cannot
-  be used for testing, as it is 
-  [hardcoded](https://github.com/gwt-maven-plugin/gwt-maven-plugin/blob/master/src/main/java/org/codehaus/mojo/gwt/shell/TestMojo.java#L298)
-  for the built-in JUnit run styles supported in GWT.
 - Only production mode testing is supported, as PhantomJS doesn't support plugins. 

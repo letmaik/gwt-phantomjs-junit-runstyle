@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -68,6 +71,24 @@ public class RunStylePhantomJS extends RunStyle {
 		Runtime.getRuntime().addShutdownHook(new ShutdownCb());
 		return 1;
 	}
+	
+	/**
+	 * Work-around until GWT's JUnitShell handles IPv6 addresses correctly.
+	 * @see https://groups.google.com/d/msg/google-web-toolkit/jLGhwUrKVRY/eQaDO6EUqdYJ
+	 */
+    public String getLocalHostName() {
+        InetAddress a;
+        try {
+            a = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException("Unable to determine my ip address", e);
+        }
+        if (a instanceof Inet6Address) {
+            return "[" + a.getHostAddress() + "]";
+        } else {
+            return a.getHostAddress();
+        }
+    }
 
 	@Override
 	public void launchModule(String moduleName)

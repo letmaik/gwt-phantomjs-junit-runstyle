@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.neothemachine</groupId>
 	<artifactId>gwt-phantomjs-junit-runstyle</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>GWT PhantomJS JUnit run style</name>
 	<description>A GWT JUnit run style for local testing with PhantomJS</description>
 	<inceptionYear>2013</inceptionYear>

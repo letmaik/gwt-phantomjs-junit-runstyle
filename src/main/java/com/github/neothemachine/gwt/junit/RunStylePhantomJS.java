@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 
 import org.apache.commons.io.FileUtils;
 
@@ -101,7 +102,7 @@ public class RunStylePhantomJS extends RunStyle {
 
 		File temp;
 		try {
-			temp = File.createTempFile("phantomjs", null);
+			temp = Files.createTempFile("phantomjs",null).toFile();
 			temp.deleteOnExit();
 			FileUtils.writeStringToFile(temp,
 					"require('webpage').create().open('" + url + "',"
